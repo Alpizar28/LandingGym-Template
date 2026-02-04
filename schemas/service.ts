@@ -1,0 +1,32 @@
+import { defineField, defineType } from 'sanity';
+
+export default defineType({
+    name: 'service',
+    title: 'Service',
+    type: 'document',
+    fields: [
+        defineField({
+            name: 'title',
+            title: 'Title',
+            type: 'string',
+        }),
+        defineField({
+            name: 'description',
+            title: 'Description',
+            type: 'text',
+        }),
+        defineField({
+            name: 'icon',
+            title: 'Icon Name (Lucide)',
+            type: 'string',
+        }),
+        defineField({
+            name: 'image',
+            title: 'Image',
+            type: 'image',
+            options: {
+                hotspot: true,
+            },
+        }),
+    ],
+});

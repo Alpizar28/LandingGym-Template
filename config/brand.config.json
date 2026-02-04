@@ -1,0 +1,28 @@
+{
+  "gymId": "default-gym",
+  "brandName": "FitLife Pro",
+  "colors": {
+    "primary": "#FF4500",
+    "secondary": "#1A1A1A",
+    "accent": "#FFD700",
+    "background": "#FFFFFF",
+    "text": "#111111",
+    "muted": "#6B7280"
+  },
+  "typography": {
+    "heading": "Inter",
+    "body": "Roboto",
+    "googleFonts": [
+      "Inter:wght@400;600;700;900",
+      "Roboto:wght@300;400;500;700"
+    ]
+  },
+  "activeSections": [
+    "home",
+    "services",
+    "about",
+    "classes",
+    "contact"
+  ],
+  "extractedFrom": ""
+}

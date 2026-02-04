@@ -1,0 +1,136 @@
+{
+    "sections": [
+        {
+            "id": "home",
+            "name": "Home",
+            "required": true,
+            "description": "Hero section principal con CTA"
+        },
+        {
+            "id": "services",
+            "name": "Services",
+            "required": false,
+            "description": "Grid de servicios ofrecidos"
+        },
+        {
+            "id": "about",
+            "name": "About Us",
+            "required": false,
+            "description": "Historia y misión del gimnasio"
+        },
+        {
+            "id": "packages",
+            "name": "Packages",
+            "required": false,
+            "description": "Planes y precios"
+        },
+        {
+            "id": "faq",
+            "name": "FAQ",
+            "required": false,
+            "description": "Preguntas frecuentes"
+        },
+        {
+            "id": "gallery",
+            "name": "Gallery",
+            "required": false,
+            "description": "Galería de imágenes"
+        },
+        {
+            "id": "testimonials",
+            "name": "Testimonials",
+            "required": false,
+            "description": "Opiniones de clientes"
+        },
+        {
+            "id": "service_areas",
+            "name": "Service Areas",
+            "required": false,
+            "description": "Mapa y zonas de cobertura"
+        },
+        {
+            "id": "contact",
+            "name": "Contact",
+            "required": true,
+            "description": "Formulario de contacto"
+        },
+        {
+            "id": "social_media",
+            "name": "Social Media",
+            "required": false,
+            "description": "Feed de redes sociales"
+        },
+        {
+            "id": "training",
+            "name": "Training",
+            "required": false,
+            "description": "Programas de entrenamiento"
+        },
+        {
+            "id": "policies",
+            "name": "Policies",
+            "required": false,
+            "description": "Términos y condiciones"
+        },
+        {
+            "id": "getting_in_touch",
+            "name": "Getting in Touch",
+            "required": false,
+            "description": "Información detallada de contacto"
+        },
+        {
+            "id": "supplements",
+            "name": "Supplements",
+            "required": false,
+            "description": "Venta de suplementos"
+        },
+        {
+            "id": "accessories",
+            "name": "Accessories",
+            "required": false,
+            "description": "Venta de accesorios"
+        },
+        {
+            "id": "classes",
+            "name": "Classes",
+            "required": false,
+            "description": "Listado de clases grupales"
+        },
+        {
+            "id": "price_plans",
+            "name": "Detailed Plans",
+            "required": false,
+            "description": "Tabla comparativa de planes"
+        },
+        {
+            "id": "schedule",
+            "name": "Schedule",
+            "required": false,
+            "description": "Calendario de clases"
+        },
+        {
+            "id": "signup",
+            "name": "Sign Up",
+            "required": false,
+            "description": "Flow de registro"
+        },
+        {
+            "id": "instructors",
+            "name": "Instructors",
+            "required": false,
+            "description": "Equipo de entrenadores"
+        },
+        {
+            "id": "locations",
+            "name": "Locations",
+            "required": false,
+            "description": "Sucursales"
+        },
+        {
+            "id": "store",
+            "name": "Store",
+            "required": false,
+            "description": "Tienda completa"
+        }
+    ]
+}
