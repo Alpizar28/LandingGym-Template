@@ -103,6 +103,20 @@ La forma más rápida es usar **Vercel**.
     *   `NEXT_PUBLIC_SANITY_DATASET`
 4.  **Deploy**.
 
+### ⚡ Opción Económica (Hostinger / cPanel)
+
+Si usas hosting compartido barato (sin Node.js) o quieres ahorrar recursos:
+
+1.  Ejecuta este comando mágico:
+    ```bash
+    npm run build:hostinger
+    ```
+2.  Se creará una carpeta llamada `out`.
+3.  Sube el **CONTENIDO** de esa carpeta `out` a la carpeta `public_html` de tu hosting.
+4.  ¡Listo! Tu web funcionará sin servidor, gratis y súper rápida.
+
+*Nota: En esta modalidad, el Studio (`/studio`) no funcionará en la web. Debes editar el contenido localmente (`npm run dev`) y volver a subir los archivos cuando hagas cambios.*
+
 ---
 
 ## 🧹 Mantenimiento

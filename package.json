@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:hostinger": "set EXPORT_MODE=true && next build",
     "start": "next start",
     "lint": "eslint"
   },

@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: 🚀 Deploy to Hostinger
 
 on:
   push:
@@ -6,18 +6,34 @@ on:
       - main
 
 jobs:
-  build:
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install Node.js
-        uses: actions/setup-node@v3
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-      - name: Install Dependencies
+          node-version: 20
+          cache: 'npm'
+
+      - name: 📦 Install Dependencies
         run: npm ci --legacy-peer-deps
-      - name: Build
-        run: npm run build
+
+      - name: 🏗️ Build Project (Static Export)
+        run: npm run build:hostinger
         env:
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+
+      - name: 📂 Sync files to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./out/
+          server-dir: ./public_html/       # OJO: Cambiar si tu carpeta en Hostinger es distinta
+          dangerous-clean-slate: true      # Borra lo viejo para dejar solo lo nuevo (cuidado con otros archivos en public_html)
