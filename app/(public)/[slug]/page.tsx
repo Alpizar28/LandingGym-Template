@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { client, LANDING_BY_SLUG_QUERY } from '@/lib/sanity';
+import { client, LANDING_QUERY } from '@/lib/sanity';
 import { getSectionComponent } from '@/lib/section-registry';
 import { generateThemeStyles } from '@/lib/theme';
 
@@ -10,7 +10,7 @@ interface PageProps {
 export default async function LandingPage({ params }: PageProps) {
     const { slug } = await params;
 
-    const landing = await client.fetch(LANDING_BY_SLUG_QUERY, { slug });
+    const landing = await client.fetch(LANDING_QUERY, { slug });
 
     if (!landing) {
         notFound();

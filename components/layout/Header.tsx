@@ -4,10 +4,17 @@ import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { getBrandConfig } from '@/lib/config-loader';
 
-export default function Header() {
+export default function Header({ config: customConfig }: { config?: any }) {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const config = getBrandConfig();
+
+    // Merge provided config with default, normalizing name
+    const defaultConfig = getBrandConfig();
+    const config = customConfig ? {
+        ...defaultConfig,
+        ...customConfig,
+        brandName: customConfig.name || customConfig.brandName || defaultConfig.brandName
+    } : defaultConfig;
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -19,15 +26,18 @@ export default function Header() {
         return id.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     };
 
-    const navLinks = config.activeSections
-        .filter(id => id !== 'home')
-        .map(id => ({ name: formatName(id), href: `#${id}` }));
+    // Use custom links from Sanity OR fallback to auto-generated links from activeSections
+    const navLinks = config.header?.links && config.header.links.length > 0
+        ? config.header.links.map((link: any) => ({ name: link.title, href: link.url }))
+        : config.activeSections
+            .filter((id: string) => id !== 'home')
+            .map((id: string) => ({ name: formatName(id), href: `#${id}` }));
 
     return (
         <header
             className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled
-                    ? 'bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm border-b border-white/10'
-                    : 'bg-transparent'
+                ? 'bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm border-b border-white/10'
+                : 'bg-transparent'
                 }`}
         >
             <div className="container mx-auto px-4">
@@ -53,7 +63,7 @@ export default function Header() {
                             href="#signup"
                             className="bg-primary text-white px-6 py-2.5 rounded font-bold text-sm hover:bg-opacity-90 transition-all transform hover:scale-105"
                         >
-                            JOIN NOW
+                            ÚNETE AHORA
                         </Link>
                     </nav>
 
@@ -86,7 +96,7 @@ export default function Header() {
                             className="mt-2 bg-primary text-white p-3 rounded text-center font-bold"
                             onClick={() => setIsOpen(false)}
                         >
-                            JOIN NOW
+                            ÚNETE AHORA
                         </Link>
                     </nav>
                 </div>

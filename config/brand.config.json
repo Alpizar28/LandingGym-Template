@@ -24,5 +24,15 @@
     "classes",
     "contact"
   ],
+  "contact": {
+    "email": "info@fitlife.com",
+    "phone": "+1 555 000 0000",
+    "address": "123 Gym St"
+  },
+  "social": {
+    "instagram": "",
+    "facebook": "",
+    "twitter": ""
+  },
   "extractedFrom": ""
 }

@@ -2,8 +2,22 @@ import Link from 'next/link';
 import { Facebook, Instagram, Twitter, Mail, MapPin, Phone } from 'lucide-react';
 import { getBrandConfig } from '@/lib/config-loader';
 
-export default function Footer() {
-    const config = getBrandConfig();
+interface FooterProps {
+    config?: any;
+}
+
+export default function Footer({ config: customConfig }: FooterProps) {
+    const defaultConfig = getBrandConfig();
+
+    // Merge sanity data with default config
+    // Sanity uses 'name', JSON uses 'brandName'. We normalize here.
+    const config = customConfig ? {
+        ...defaultConfig,
+        ...customConfig,
+        brandName: customConfig.name || customConfig.brandName || defaultConfig.brandName,
+        contact: customConfig.contact || defaultConfig.contact,
+        social: customConfig.social || defaultConfig.social
+    } : defaultConfig;
 
     return (
         <footer className="bg-zinc-950 text-white pt-16 pb-8 border-t border-white/10">
@@ -15,72 +29,78 @@ export default function Footer() {
                             <span className="text-primary">{config.brandName}</span>
                         </Link>
                         <p className="text-gray-400 mb-6 max-w-xs">
-                            Transforming lives through fitness, community, and expert coaching. Join the movement today.
+                            {config.footer?.text || "Transformando vidas a través del fitness, comunidad y entrenamiento experto. Únete al movimiento hoy."}
                         </p>
                         <div className="flex gap-4">
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <Instagram size={20} />
-                            </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <Facebook size={20} />
-                            </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <Twitter size={20} />
-                            </a>
+                            {config.social?.instagram && (
+                                <a href={config.social.instagram} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                                    <Instagram size={20} />
+                                </a>
+                            )}
+                            {config.social?.facebook && (
+                                <a href={config.social.facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                                    <Facebook size={20} />
+                                </a>
+                            )}
+                            {config.social?.twitter && (
+                                <a href={config.social.twitter} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                                    <Twitter size={20} />
+                                </a>
+                            )}
                         </div>
                     </div>
 
-                    {/* Quick Links */}
+                    {/* Quick Links (Dynamic or Static Fallback) */}
                     <div>
-                        <h3 className="text-lg font-bold mb-6 font-heading">QUICK LINKS</h3>
+                        <h3 className="text-lg font-bold mb-6 font-heading">ENLACES RÁPIDOS</h3>
                         <ul className="space-y-3">
-                            <li><Link href="#services" className="text-gray-400 hover:text-primary transition-colors">Services</Link></li>
-                            <li><Link href="#classes" className="text-gray-400 hover:text-primary transition-colors">Classes</Link></li>
-                            <li><Link href="#coaches" className="text-gray-400 hover:text-primary transition-colors">Our Coaches</Link></li>
-                            <li><Link href="#pricing" className="text-gray-400 hover:text-primary transition-colors">Pricing</Link></li>
+                            {config.footer?.links && config.footer.links.length > 0 ? (
+                                config.footer.links.map((link: any, i: number) => {
+                                    if (!link || !link.title) return null;
+                                    return (
+                                        <li key={i}>
+                                            <Link href={link.url || '#'} className="text-gray-400 hover:text-primary transition-colors">
+                                                {link.title}
+                                            </Link>
+                                        </li>
+                                    );
+                                })
+                            ) : (
+                                // Fallback static links if none provided in Sanity
+                                <>
+                                    <li><Link href="#services" className="text-gray-400 hover:text-primary transition-colors">Servicios</Link></li>
+                                    <li><Link href="#classes" className="text-gray-400 hover:text-primary transition-colors">Clases</Link></li>
+                                    <li><Link href="#coaches" className="text-gray-400 hover:text-primary transition-colors">Entrenadores</Link></li>
+                                    <li><Link href="#pricing" className="text-gray-400 hover:text-primary transition-colors">Precios</Link></li>
+                                </>
+                            )}
                         </ul>
                     </div>
 
-                    {/* Contact */}
+                    {/* Contact (Dynamic) */}
                     <div>
-                        <h3 className="text-lg font-bold mb-6 font-heading">CONTACT US</h3>
+                        <h3 className="text-lg font-bold mb-6 font-heading">CONTÁCTANOS</h3>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3 text-gray-400">
                                 <MapPin className="shrink-0 text-primary" size={20} />
-                                <span>123 Fitness Blvd, Gym City, GC 12345</span>
+                                <span>{config.contact?.address || "123 Fitness Blvd, Gym City"}</span>
                             </li>
                             <li className="flex items-center gap-3 text-gray-400">
                                 <Phone className="shrink-0 text-primary" size={20} />
-                                <span>+1 (555) 123-4567</span>
+                                <span>{config.contact?.phone || "+1 (555) 123-4567"}</span>
                             </li>
                             <li className="flex items-center gap-3 text-gray-400">
                                 <Mail className="shrink-0 text-primary" size={20} />
-                                <span>hello@fitlifepro.com</span>
+                                <span>{config.contact?.email || "hola@fitlifepro.com"}</span>
                             </li>
                         </ul>
-                    </div>
-
-                    {/* Newsletter */}
-                    <div>
-                        <h3 className="text-lg font-bold mb-6 font-heading">NEWSLETTER</h3>
-                        <p className="text-gray-400 mb-4">Subscribe to get the latest news and offers.</p>
-                        <form className="flex gap-2">
-                            <input
-                                type="email"
-                                placeholder="Your email"
-                                className="bg-white/5 border border-white/10 rounded px-4 py-2 w-full focus:outline-none focus:border-primary text-white"
-                            />
-                            <button className="bg-primary text-white px-4 py-2 rounded font-bold hover:bg-opacity-90 transition-colors">
-                                GO
-                            </button>
-                        </form>
                     </div>
                 </div>
 
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-                    <p>&copy; {new Date().getFullYear()} {config.brandName}. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} {config.brandName}. Todos los derechos reservados.</p>
                     <div className="flex gap-6">
-                        <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+                        <Link href="#" className="hover:text-white transition-colors">Política de Privacidad</Link>
                         <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
                     </div>
                 </div>

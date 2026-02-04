@@ -48,6 +48,8 @@ export default defineType({
                             options: {
                                 list: [
                                     { title: 'Home / Hero', value: 'home' },
+                                    { title: 'Pricing / Plans', value: 'pricing' },
+                                    { title: 'Photo Gallery', value: 'gallery' },
                                     { title: 'Generic Section', value: 'generic' },
                                 ],
                             },
@@ -64,7 +66,7 @@ export default defineType({
                             title: 'Variant',
                             type: 'string',
                             description: 'Required for generic sections (e.g., services, about, classes)',
-                            hidden: ({ parent }) => parent?.key === 'home',
+                            hidden: ({ parent }) => parent?.key === 'home' || parent?.key === 'gallery',
                             validation: (Rule) =>
                                 Rule.custom((value, context) => {
                                     const parent = context.parent as any;
@@ -87,12 +89,18 @@ export default defineType({
                             name: 'contentRef',
                             title: 'Content Reference',
                             type: 'reference',
-                            to: [{ type: 'heroSection' }, { type: 'genericSection' }],
+                            to: [{ type: 'heroSection' }, { type: 'genericSection' }, { type: 'gallery' }],
+                            hidden: ({ parent }) => parent?.key === 'pricing',
                             options: {
                                 filter: ({ parent }: any) => {
                                     if (parent?.key === 'home') {
                                         return {
                                             filter: '_type == "heroSection"',
+                                        };
+                                    }
+                                    if (parent?.key === 'gallery') {
+                                        return {
+                                            filter: '_type == "gallery"',
                                         };
                                     }
                                     if (parent?.key === 'generic') {
@@ -112,7 +120,12 @@ export default defineType({
                         },
                         prepare(selection) {
                             const { key, variant } = selection;
-                            const subtitle = key === 'generic' ? `Generic (${variant})` : 'Home / Hero';
+                            let subtitle = '';
+                            if (key === 'pricing') subtitle = 'Pricing / Plans (Auto)';
+                            else if (key === 'gallery') subtitle = 'Photo Gallery';
+                            else if (key === 'generic') subtitle = `Generic (${variant})`;
+                            else subtitle = 'Home / Hero';
+
                             return {
                                 title: subtitle,
                             };

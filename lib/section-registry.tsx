@@ -11,6 +11,8 @@ const SECTIONS: Record<string, SectionComponent> = {
     services: dynamic(() => import('@/components/sections/Services').catch(() => () => <div>Services Section Missing</div>)),
     about: dynamic(() => import('@/components/sections/About').catch(() => () => <div>About Section Missing</div>)),
     contact: dynamic(() => import('@/components/sections/Contact').catch(() => () => <div>Contact Section Missing</div>)),
+    pricing: dynamic(() => import('@/components/sections/Pricing').catch(() => () => <div>Pricing Section Missing</div>)),
+    gallery: dynamic(() => import('@/components/sections/Gallery').catch(() => () => <div>Gallery Section Missing</div>)),
     // Add other sections as they are created
 };
 
